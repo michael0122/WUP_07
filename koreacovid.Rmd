@@ -40,6 +40,22 @@ with(kRdata, table(Sex, result))
 
 ## We create two bar charts - one based on frequency and the other on percent, use ggplot commands to do this
 
+```{r}
+dd3 <- kRdata %>% group_by(result,Sex) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+
+# the group_by followed by summarize(count=n())
+
+basicC <- ggplot(dd3,aes(x=result,y=count,fill=Sex))
+basicC + geom_bar(stat="identity",position="dodge")
+
+#Now for percentage plot
+
+basicCC <- ggplot(dd3,aes(x=result,y=prcnt*100,fill=Sex)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+
+
 
 ```{r}
 barchartGC(~result + sex,data=kRdata)
@@ -72,3 +88,4 @@ fisher's exact test for count data shows that males are 2.3 times more likely to
 
 ## Conclusions
 
+our null hypothesis stated that covid related deaths are independent to sex. at first we have added a bar chart to show the  amount of deaths per 100 and it demonstrated that almost 60% of males die and 40% of females die. the numerical results has helped us to determine that 64 males die from covid compare to 36 of females and that shows that males are more likely to die from covid compared to females.
